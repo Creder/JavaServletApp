@@ -22,4 +22,10 @@ public class FirstServlet extends HttpServlet {
             res.getWriter().append((String) session.getAttribute("Name"));
         }
     }
+
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
+    }
 }
