@@ -1,3 +1,5 @@
+import business.UserDB;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,14 +11,13 @@ import java.io.PrintWriter;
 
 @WebServlet("/login")
 public class loginServlet extends HttpServlet {
+    UserDB userDB = new UserDB();
     @Override
     public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        RequestDispatcher requestDispatcher;
-
-        if(username.equalsIgnoreCase("JCDenton") && password.equals("bionicman")){
+        if(userDB.getUser(username, password) != null){
             req.getSession().setAttribute("username", username);
             res.sendRedirect("welcome.jsp");
         }

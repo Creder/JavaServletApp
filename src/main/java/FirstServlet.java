@@ -5,27 +5,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-@WebServlet(urlPatterns="/hello")
+@WebServlet(urlPatterns="/connectToDB")
 public class FirstServlet extends HttpServlet {
+    static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/dbforjavaee";
+    static final String USER = "postgres";
+    static final String PASS = "12345";
     @Override
     public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        res.getWriter().append("Hi! " + req.getMethod());
-        HttpSession session = req.getSession();
+       try {
+           Class.forName("org.postgresql.Driver");
+       }
+       catch (ClassNotFoundException e){
+           System.out.println("Postgresql not found!");
+           e.printStackTrace();
+           return;
+       }
+        Connection connection;
+       try {
+           connection = DriverManager.getConnection(DB_URL, USER, PASS);
+       }
+       catch (SQLException e){
+           System.out.println("Cannot connect to db");
+           e.printStackTrace();
+           return;
+       }
 
-        if(session.getAttribute("Name") == null)
-        {
-            session.setAttribute("Name", "Oi!");
-            res.getWriter().append("No session");
-        }
-        else{
-            res.getWriter().append((String) session.getAttribute("Name"));
-        }
+       if(connection !=null){
+           System.out.println("Connection success!");
+       }
+       else System.out.println("Connection failed!");
+
     }
 
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
 }
