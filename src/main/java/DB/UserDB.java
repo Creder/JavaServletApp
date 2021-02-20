@@ -16,9 +16,9 @@ public class UserDB {
                 Statement statement = con.createStatement();
                 ResultSet result = statement.executeQuery("Select * from users");
                 while (result.next()) {
-                    int id = result.getInt(3);
-                    String username = result.getString(1);
-                    String password = result.getString(2);
+                    int id = result.getInt("userID");
+                    String username = result.getString("username");
+                    String password = result.getString("passw");
                     User user = new User(id, username, password);
                     userList.add(user);
                 }
@@ -41,8 +41,8 @@ public class UserDB {
                 statement.setString(1, username);
                 ResultSet result = statement.executeQuery();
                 if(result.next()) {
-                    if(result.getString(2).equals(password)){
-                        user = new User(result.getInt(3), result.getString(1), result.getString(2));
+                    if(result.getString("passw").equals(password)){
+                        user = new User(result.getInt("userId"), result.getString("username"), result.getString("passw"));
                     }
                 }
             }
@@ -62,7 +62,7 @@ public class UserDB {
                 PreparedStatement statement = con.prepareStatement(sqlquery);
                 statement.setString(1, username);
                 statement.setString(2, password);
-                statement.executeQuery();
+                statement.execute();
             }
         }
         catch (Exception throwables) {
