@@ -4,7 +4,7 @@
 <h1>Hello First JSP!</h1>
 <center>
     <h2>Servlet Send Redirect Example</h2>
-    <form id="loginFormId" name="loginForm" method="post" action="login">
+    <form id="loginFormId" name="loginForm" method="POST" action="login">
         <div id="usernameDiv" class="paddingBtm">
             <span id="user">Username: </span><input id="userInput" type="text" name="username" />
         </div>
