@@ -1,4 +1,4 @@
-<%@ page import="DB.UserDB" %>
+<%@ page import="DAO.UserDao" %>
 <%@ page import="business.User" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,7 +13,8 @@
 <body><H1>Welcome ${username}</H1>
 <h2>Users List</h2>
 <%
-    List<User> users = UserDB.getUserList();
+    UserDao userDao = new UserDao();
+    List<User> users = userDao.readAllList();
 
     for (User user : users){
        out.println("<p>"+ user.getuserId() + " " + user.getUsername() + " " + user.getPassword()+ "</p>");
@@ -22,8 +23,9 @@
 
 <h2>Create new user</h2>
 <form method="POST" action="user">
+    <input name="email" placeholder="Email">
     <input name="usrn" placeholder="Name">
-    <input name="pass" placeholder="password">
+    <input name="pass" type="password" placeholder="password">
     <button type="submit" value="Create"></button>
 </form>
 </body>

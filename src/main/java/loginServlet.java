@@ -1,4 +1,4 @@
-import DB.UserDB;
+import DAO.UserDao;
 import business.User;
 
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +12,10 @@ public class loginServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        UserDao userDao = new UserDao();
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        User user = UserDB.getUser(username, password);
+        User user = userDao.read(new User(username,password));
         if( user != null){
             req.getSession().setAttribute("username", user.getUsername());
             res.sendRedirect("welcome.jsp");
