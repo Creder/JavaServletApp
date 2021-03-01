@@ -11,6 +11,7 @@
         <property name="connection.password">12345</property>
         <property name="show_sql">true</property>
 
-        <mapping resource="business/User.hbm.xml"/>
+        <mapping class="business.Fanfic"/>
+        <mapping class="business.User"/>
     </session-factory>
 </hibernate-configuration>

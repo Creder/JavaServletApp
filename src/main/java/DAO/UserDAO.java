@@ -1,36 +1,17 @@
 package DAO;
 
-import DB.SessionF;
 import business.User;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class UserDao implements GenericDao<User> {
-    private final SessionFactory factory;
+public class UserDAO extends AbstractDAO<User> {
 
-    public UserDao(){
-        this.factory = SessionF.getSessionFactory();
-    };
-
-    @Override
-    public void create(User user) {
-            try (final Session session = factory.openSession()){
-                session.beginTransaction();
-                session.save(user);
-                session.getTransaction().commit();
-            }
-            catch (Exception throwables) {
-                throwables.printStackTrace();
-            }
-
-    }
     @Override
     public List<User> readAllList(){
         List<User> users;
-        try(final Session session = factory.openSession()) {
+        try(final Session session = super.getFactory().openSession()) {
             users = session.createQuery("select u from User u", User.class).getResultList();
         }
         return users;
@@ -42,7 +23,7 @@ public class UserDao implements GenericDao<User> {
         if(user != null){
             String username = user.getUsername();
             if(username != null || !username.equals(""))
-                try (final Session session = factory.openSession()){
+                try (final Session session = super.getFactory().openSession()){
                     Query<User> query = session.createQuery("from User u where u.username=:username", User.class);
                     query.setParameter("username", username);
                     result = query.uniqueResult();

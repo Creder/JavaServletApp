@@ -1,4 +1,6 @@
-import DAO.UserDao;
+package Servlets;
+
+import DAO.UserDAO;
 import business.User;
 
 import javax.servlet.annotation.WebServlet;
@@ -8,20 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/login")
-public class loginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        UserDao userDao = new UserDao();
+        UserDAO userDao = new UserDAO();
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        User user = userDao.read(new User(username,password));
-        if( user != null){
-            req.getSession().setAttribute("username", user.getUsername());
-            res.sendRedirect("welcome.jsp");
+
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+
+        User userFromDb = userDao.read(user);
+        if( userFromDb != null) {
+            req.getSession().setAttribute("user", userFromDb);
         }
-        else{
-            res.sendRedirect("index.jsp");
-        }
+        res.sendRedirect("index.jsp");
     }
 }
