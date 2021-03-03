@@ -17,7 +17,7 @@ public class Fanfic implements Serializable {
     @Column(name = "title", nullable = false, unique = true)
     private String title;
 
-    @Column(name = "content", nullable = false, unique = true, length = 65535)
+    @Column(name = "fanfic_cont", nullable = false, unique = true, length = 65535)
     private String content;
 
     @ManyToOne

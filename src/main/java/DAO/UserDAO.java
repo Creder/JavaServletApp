@@ -1,15 +1,16 @@
 package DAO;
 
+import business.Fanfic;
 import business.User;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class UserDAO extends AbstractDAO<User> {
+public class UserDAO extends AbstractDAO<User, Fanfic> {
 
     @Override
-    public List<User> readAllList(){
+    public List<User> readEntityList(){
         List<User> users;
         try(final Session session = super.getFactory().openSession()) {
             users = session.createQuery("select u from User u", User.class).getResultList();

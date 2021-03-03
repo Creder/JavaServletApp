@@ -9,7 +9,7 @@ import javax.persistence.PersistenceException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AbstractDAO<T> implements GenericDAO<T> {
+public class AbstractDAO<T, V> implements GenericDAO<T,V> {
     private final SessionFactory factory;
 
     public AbstractDAO(){
@@ -40,7 +40,12 @@ public class AbstractDAO<T> implements GenericDAO<T> {
     }
 
     @Override
-    public List<T> readAllList() {
+    public List<T> readEntityList() {
+        return null;
+    }
+
+    @Override
+    public List<T> readEntityList(V v) {
         return null;
     }
 

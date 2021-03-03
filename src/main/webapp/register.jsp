@@ -5,7 +5,7 @@
 </head>
 <body>
 <h2>Register</h2>
-<form id="registerFormId" name="registerForm" method="POST" action="register">
+<form id="registerFormId" name="registerForm" method="POST" action="registration">
     <div id="emailDiv" class="paddingBtm">
         <span id="email">Email: </span><input id="emailInput" type="text" name="email" />
     </div>

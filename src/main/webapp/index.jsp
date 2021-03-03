@@ -33,6 +33,7 @@
         else {
             out.print("<H1>Welcome "+ user.getUsername() + "</H1>"+
                     "<form method =\"post\" action=\"logout\">"+
+                    "<a href=\"user.jsp\">My page</a>"+
                     "<input type=\"submit\" name=\"Logout\" value=\"Logout\"/>"+
                     "</form>"+
                     "<h2>Create new fanfic</h2>\n" +
@@ -47,7 +48,7 @@
 
     FanficDAO fanficDAO = new FanficDAO();
         List<Fanfic> fanfics = new ArrayList<>();
-        if((fanfics = fanficDAO.readAllList()) != null){
+        if((fanfics = fanficDAO.readEntityList()) != null){
             for(Fanfic fanfic : fanfics){
                 out.print("<h3>"+fanfic.getTitle()+"</h3>"+
                             "<p>author: </p>"+ fanfic.getAuthor().getUsername());
