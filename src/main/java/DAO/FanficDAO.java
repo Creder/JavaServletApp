@@ -18,7 +18,7 @@ public class FanficDAO extends AbstractDAO<Fanfic, User> {
         List<Fanfic> fanfics = new ArrayList<Fanfic>();
         List<Object[]> responseList = null;
         try(session) {
-            responseList = session.createQuery("select f.id, f.title, f.content, f.author.userId, f.author.username from Fanfic f").getResultList();
+            responseList = session.createQuery("select f.id, f.title, f.author.userId, f.author.username from Fanfic f").getResultList();
 
         }
         catch (Exception throwables) {
@@ -32,8 +32,7 @@ public class FanficDAO extends AbstractDAO<Fanfic, User> {
                 Fanfic fanfic = new Fanfic();
                 fanfic.setFanficId((Long) o[0]);
                 fanfic.setTitle((String) o[1]);
-                fanfic.setContent((String) o[2]);
-                fanfic.setAuthor(new User((Long) o[3], (String) o[4]));
+                fanfic.setAuthor(new User((Long) o[2], (String) o[3]));
                 fanfics.add(fanfic);
             }
         }
@@ -62,7 +61,8 @@ public class FanficDAO extends AbstractDAO<Fanfic, User> {
                 Fanfic fanfic = new Fanfic();
                 fanfic.setFanficId((Long) o[0]);
                 fanfic.setTitle((String) o[1]);
-                fanfic.setAuthor(new User((Long) o[2], (String) o[3]));
+                fanfic.setContent((String) o[2]);
+                fanfic.setAuthor(new User((Long) o[3], (String) o[4]));
                 fanfics.add(fanfic);
             }
         }
