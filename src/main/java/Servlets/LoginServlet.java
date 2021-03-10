@@ -22,7 +22,7 @@ public class LoginServlet extends HttpServlet {
         user.setUsername(username);
         user.setPassword(password);
 
-        User userFromDb = userDao.read(user);
+        User userFromDb = userDao.findByUsername(user);
         if( userFromDb != null) {
             req.getSession().setAttribute("user", userFromDb);
         }

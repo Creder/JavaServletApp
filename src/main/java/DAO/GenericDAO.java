@@ -8,8 +8,7 @@ import java.util.List;
 public interface GenericDAO<T, V> {
     public void create(T entity) throws PSQLException;
     public List<T> readEntityList();
-    public List<T> readEntityList(V v);
-    public T read(T entity);
+    public T findById(Long id);
     public void update(T entity);
     public void delete(T entity);
 }

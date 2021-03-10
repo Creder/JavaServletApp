@@ -45,12 +45,7 @@ public class AbstractDAO<T, V> implements GenericDAO<T,V> {
     }
 
     @Override
-    public List<T> readEntityList(V v) {
-        return null;
-    }
-
-    @Override
-    public T read(T entity) {
+    public T findById(Long id) {
         return null;
     }
 

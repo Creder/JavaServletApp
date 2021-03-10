@@ -41,15 +41,15 @@ public class FanficDAO extends AbstractDAO<Fanfic, User> {
         return fanfics;
     }
 
-    @Override
-    public List<Fanfic> readEntityList(User user){
-        List<Fanfic> fanfics = null;
+    public List<Fanfic> findByUser(String username){
         final Session session = super.getFactory().openSession();
-        try(session) {
-            Query<Fanfic> query = session.createQuery("select f.id, f.title, f.content, f.author.userId, f.author.username from Fanfic f join User u on u.userId =f.author.userId where f.author.userId =:user_id");
-            query.setParameter("user_id", user.getUserId());
-            fanfics = query.getResultList();
 
+        List<Fanfic> fanfics = new ArrayList<Fanfic>();
+        List<Object[]> responseList = null;
+        try(session) {
+            Query<Object[]> query = session.createQuery("select f.id, f.title, f.content, f.author.userId, f.author.username from Fanfic f where f.author.username = :username");
+            query.setParameter("username", username);
+            responseList = query.getResultList();
         }
         catch (Exception throwables) {
             throwables.printStackTrace();
@@ -57,20 +57,30 @@ public class FanficDAO extends AbstractDAO<Fanfic, User> {
         finally {
             session.close();
         }
+        if(responseList !=null){
+            for(Object[] o : responseList){
+                Fanfic fanfic = new Fanfic();
+                fanfic.setFanficId((Long) o[0]);
+                fanfic.setTitle((String) o[1]);
+                fanfic.setContent((String) o[2]);
+                fanfic.setAuthor(new User((Long) o[3], (String) o[4]));
+                fanfics.add(fanfic);
+            }
+        }
+
         return fanfics;
     }
 
     @Override
-    public Fanfic read(Fanfic fanfic) {
-        Fanfic result = null;
+    public Fanfic findById(Long fanficId) {
+        Fanfic fanfic = new Fanfic();
+        Object[] response = null;
         final Session session = super.getFactory().openSession();
-        if(fanfic != null){
-            String fanficname = fanfic.getTitle();
-            if(fanficname != null || !fanficname.equals(""))
+        if(fanficId != null){
                 try (session){
-                    Query<Fanfic> query = session.createQuery("from Fanfic f where f.title=:fanficname", Fanfic.class);
-                    query.setParameter("fanficname", fanficname);
-                    result = query.uniqueResult();
+                    Query<Object[]> query = session.createQuery("select f.id, f.title, f.author.userId, f.author.username from Fanfic f where f.fanficId=:fanficId");
+                    query.setParameter("fanficId", fanficId);
+                    response = query.uniqueResult();
 
                 }
                 catch (Exception throwables) {
@@ -79,7 +89,12 @@ public class FanficDAO extends AbstractDAO<Fanfic, User> {
             finally {
                     session.close();
                 }
+                if(response != null){
+                    fanfic.setFanficId((Long) response[0]);
+                    fanfic.setTitle((String) response[1]);
+                    fanfic.setAuthor((new User((Long) response[2], (String) response[3])));
+                }
         }
-        return result;
+        return fanfic;
     }
 }
