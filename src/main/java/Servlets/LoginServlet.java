@@ -3,6 +3,9 @@ package Servlets;
 import DAO.UserDAO;
 import business.User;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +14,15 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+    private UserDAO userDao;
+    @Override
+    public void init() throws ServletException {
+        userDao = new UserDAO();
+    }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        UserDAO userDao = new UserDAO();
+
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 

@@ -1,7 +1,6 @@
 package Servlets;
 
 import DAO.FanficDAO;
-import DAO.UserDAO;
 import business.Fanfic;
 import business.User;
 import org.postgresql.util.PSQLException;
@@ -13,9 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/createFanfic")
+@WebServlet("/addfanfic")
 public class FanficServlet extends HttpServlet {
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         FanficDAO fanficDAO = new FanficDAO();
@@ -36,7 +34,7 @@ public class FanficServlet extends HttpServlet {
             }
         }
 
-        resp.sendRedirect("index.jsp");
+        resp.sendRedirect("user.jsp");
 
 
 
