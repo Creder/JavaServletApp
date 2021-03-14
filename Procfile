@@ -1,1 +1,1 @@
-web: java -jar target/dependency/webapp-runner.jar target/SimpleWebApp.jar
+web: java -jar target/dependency/webapp-runner.jar target/SimpleWebApp.war
